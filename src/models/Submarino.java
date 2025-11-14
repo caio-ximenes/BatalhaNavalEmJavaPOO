@@ -1,4 +1,4 @@
 package models;
 
-public class Submarino {
+public class Submarino extends  Bonecos{
 }

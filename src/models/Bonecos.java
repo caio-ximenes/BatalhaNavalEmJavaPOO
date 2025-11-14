@@ -9,6 +9,7 @@ public abstract class Bonecos {
     int tamanho;
     Player player;
     ArrayList<Object> tirosRecebidos;
+    String nome;
 
     public abstract boolean receberTiro(Ponto ponto);
 

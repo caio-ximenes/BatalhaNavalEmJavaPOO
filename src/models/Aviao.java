@@ -1,4 +1,4 @@
 package models;
 
-public class Aviao {
+public class Aviao extends Bonecos{
 }
