@@ -1,8 +1,6 @@
 package models;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Scanner;
 
 public class Partida {
@@ -31,6 +29,27 @@ public class Partida {
         Tabuleiro ataquePlayer1 = new Tabuleiro();
         Player player1 = new Player(defesaPlayer1, ataquePlayer1, this.bonecosPorPLayer , nome, this);
 
+        for (int i = 0; i < this.bonecosPorPLayer.size(); i++) {
+            Bonecos boneco = this.bonecosPorPLayer.get(i);
+            ArrayList<String> instrucoes = this.posicionarBonecos(boneco);
+
+            ArrayList<Ponto> pontosReaisDoBarco = new ArrayList<>();
+
+            int coordenadax = Integer.parseInt(instrucoes.get(0));
+            int coordenaday = Integer.parseInt(instrucoes.get(1));
+            String direcao = instrucoes.get(2);
+            int tamanho = boneco.tamanho;
+            for (int j = 0; j < tamanho; j++) {
+                if (direcao.equals("Vertical")) {
+                    pontosReaisDoBarco.add(new Ponto(coordenadax + j, coordenaday));
+                } else { // "Horizontal"
+                    pontosReaisDoBarco.add(new Ponto(coordenadax, coordenaday + j));
+                }
+            }
+
+            defesaPlayer1.adicionarBarco(pontosReaisDoBarco);
+        }
+
     }
 
 
@@ -51,6 +70,7 @@ public class Partida {
             coordenadas.add(Integer.toString(linha));
             coordenadas.add(Integer.toString(coluna));
             coordenadas.add("Vertical");
+
             return coordenadas;
         } else if (direcao == 2) {
             ArrayList<String> coordenadas = new ArrayList<String>();

@@ -20,5 +20,7 @@ public class Player {
         this.partida = partida;
     }
 
+    public atacar(int coordenadaX, int coordenadaY){}
+
 
 }
