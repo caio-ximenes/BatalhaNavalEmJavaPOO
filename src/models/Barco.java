@@ -1,8 +1,8 @@
 package models;
 
 public class Barco extends Bonecos{
-    public Barco() {
-        super(3,"Barco") ;
+    public Barco(Player player) {
+        super(Player player,,"Barco") ;
 
     }
 
