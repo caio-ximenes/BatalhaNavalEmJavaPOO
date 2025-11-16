@@ -1,58 +1,28 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Objects;
 
 public abstract class Bonecos {
-    private Player player;
     protected int tamanho;
-    protected Tabuleiro tabuleiro;
-    protected ArrayList<Ponto> coordenadas;
     protected ArrayList<Ponto> tirosRecebidos;
     protected String nome;
 
-    public Bonecos(Player player, int tamanho, Tabuleiro tabuleiro, ArrayList<Ponto> coordenadas, String nome) {
-        this.player = player;
+    public Bonecos(int tamanho, String nome) {
         this.tamanho = tamanho;
-        this.tabuleiro = tabuleiro;
-        this.coordenadas = coordenadas;
         this.nome = nome;
+        this.tirosRecebidos = new ArrayList<>();
     }
 
-    public boolean receberTiro(Ponto ponto){
-        this.tirosRecebidos.add(ponto);
-        return this.abatido();
-    }
+    //O tabuleiro chamará esse metodo e cada tipo de boneco receberá o tiro de uma forma
+    public abstract boolean receberTiro(Ponto ponto, Map<Ponto, Bonecos> mapa);
 
-    public boolean abatido(){
-        if (this.tirosRecebidos.equals(this.coordenadas)){
-            return true;
-        }
-        return false;
-    }
+    //Verificar se o boneco está destruído
+    public abstract boolean abatido();
 
-    public void posicionarSe(Ponto ponto, Direcoes direcao){
-        boolean posicaoValida = this.tabuleiro.validarPosicao();
-        if (posicaoValida){
-            coordenadas.add(ponto);
-            for(int i = 0; i < this.tamanho; i++){
-                if (direcao.equals("direita")) {
-                    Ponto pontoVizinho = ponto.pegarVizinho(direcao);
-                    coordenadas.add(pontoVizinho);
-                }else if (direcao.equals("esquerda")) {
-                    Ponto pontoVizinho = ponto.pegarVizinho(direcao);
-                    coordenadas.add(pontoVizinho);
-                }else if (direcao.equals("cima")) {
-                    Ponto pontoVizinho = ponto.pegarVizinho(direcao);
-                    coordenadas.add(pontoVizinho);
-                }else if (direcao.equals("baixo")) {
-                    Ponto pontoVizinho = ponto.pegarVizinho(direcao);
-                    coordenadas.add(pontoVizinho);
-                }
 
-            }
-        }
 
     }
 
-}
+
