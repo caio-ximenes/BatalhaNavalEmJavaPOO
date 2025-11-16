@@ -11,7 +11,6 @@ public class Jogada {
         Ponto ponto = new Ponto(coordenadax,coordenaday);
         player.receberAtaque(Ponto ponto);
         jogadas.add(ponto);
-        if ()
 
     }
 }

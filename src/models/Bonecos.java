@@ -11,6 +11,14 @@ public abstract class Bonecos {
     ArrayList<Object> tirosRecebidos;
     String nome;
 
+    public Bonecos(int tamanho, String nome) {
+        this.tamanho = tamanho;
+        this.nome = nome;
+        this.coordenadas = new ArrayList<>();
+        this.tirosRecebidos = new ArrayList<>();
+    }
+
+
     public abstract boolean receberTiro(Ponto ponto);
 
     public abstract boolean abatido();

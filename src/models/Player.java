@@ -20,7 +20,24 @@ public class Player {
         this.partida = partida;
     }
 
-    public atacar(int coordenadaX, int coordenadaY){}
+    public boolean atacar(int coordenadaX, int coordenadaY){
+        Ponto tiro = new Ponto(coordenadaX,coordenadaY);
+        Tabuleiro tabuleiroAdversario = this.partida.adversario.defesa;
+
+        boolean acertou = tabuleiroAdversario.verificarAtaque(coordenadaX,coordenadaY);
+
+        if(acertou){
+            this.ataque.acertos.add(tiro);
+
+        }
+        else {
+            this.ataque.erros.add(tiro);
+        }
+        return acertou;
+
+    }
+
+    public
 
 
 }
