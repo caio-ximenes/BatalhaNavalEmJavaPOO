@@ -22,6 +22,8 @@ public class Submarino extends  Bonecos{
         else{
             if(!this.tirosRecebidos.contains(ponto)){
                 this.tirosRecebidos.add(ponto);
+
+                mapa.remove(ponto);
             }
             //Retorna True se o Barco tiver sido abatido ou não
             return this.abatido();

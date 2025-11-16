@@ -41,34 +41,31 @@ public class Tabuleiro {
         // 1. Verificamos o que tem nos mapas naquela coordenada
         // O tiro acerta primeiro quem está no ar, logo:
         Bonecos aviao = this.mapaAereo.get(tiro);
+        Bonecos embarcacao = this.mapaMaritimo.get(tiro);
 
         //Verifica se o avião foi acertado para depois verificar o Mar
         if (aviao!=null){
-            System.out.println("FOGO! AVIÂO ABATIDO!!");
-            this.mapaAereo.remove(tiro);
+            System.out.println("FOGO! AVIÃO ABATIDO!!");
+            aviao.receberTiro(tiro,this.mapaAereo);
             return true;
         }
 
         else {
-            Bonecos embarcacao = this.mapaMaritimo.get(tiro);
-
             if (embarcacao != null) {
                 System.out.println("FOGO!");
-                boolean afundou = embarcacao.receberTiro(tiro);
+                boolean afundou = embarcacao.receberTiro(tiro, this.mapaMaritimo);
 
                 if (afundou){
                     System.out.println("Você destruiu o: " + embarcacao.nome + "!");
                 }
+                return true;
             }
             else {
-                System.out.println("FOGO!");
-                boolean afundou = embarcacao.receberTiro(tiro, this.mapaMaritimo);
-                this.mapaMaritimo.remove(tiro); // Remove para não acertar de novo
+                System.out.println("ÁGUA!");
 
-                if (afundou) {
-                    System.out.println("Você destruiu o: " + embarcacao.nome + "!");
-                }
-                return true;
+
+
+                return false;
             }
         }
     }
