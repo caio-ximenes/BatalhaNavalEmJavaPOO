@@ -47,7 +47,7 @@ public class Partida {
                 }
             }
 
-            defesaPlayer1.adicionarBarco(pontosReaisDoBarco);
+            defesaPlayer1.adicionarBarco(boneco,pontosReaisDoBarco);
         }
 
     }

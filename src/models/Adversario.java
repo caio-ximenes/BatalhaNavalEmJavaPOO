@@ -8,5 +8,5 @@ public class Adversario extends  Player{
         super(defesa, ataque, bonecos, tirosRecebidos, nome, partida);
     }
 
-    public boolean receberAtaque()
+
 }
