@@ -1,11 +1,19 @@
 package models;
-import java.util.ArrayList;
 
 public class Submarino extends  Bonecos{
-    public Submarino(Player player, int tamanho, Tabuleiro tabuleiro, ArrayList<Ponto> coordenadas, ArrayList<Ponto> tirosRecebidos, String nome) {
-        super(player, tamanho, tabuleiro, coordenadas, tirosRecebidos, nome);
+
+    public Submarino() {
+        super(2, "Submarino");
+
     }
 
+    @Override
+    public boolean receberTiro(Ponto ponto) {
+        return false;
+    }
 
-
+    @Override
+    public boolean abatido() {
+        return false;
+    }
 }

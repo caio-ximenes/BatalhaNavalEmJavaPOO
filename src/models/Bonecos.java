@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public abstract class Bonecos {
-
     private Player player;
     protected int tamanho;
     protected Tabuleiro tabuleiro;
@@ -12,12 +11,11 @@ public abstract class Bonecos {
     protected ArrayList<Ponto> tirosRecebidos;
     protected String nome;
 
-    public Bonecos(Player player, int tamanho, Tabuleiro tabuleiro, ArrayList<Ponto> coordenadas, ArrayList<Ponto> tirosRecebidos, String nome) {
+    public Bonecos(Player player, int tamanho, Tabuleiro tabuleiro, ArrayList<Ponto> coordenadas, String nome) {
         this.player = player;
         this.tamanho = tamanho;
         this.tabuleiro = tabuleiro;
         this.coordenadas = coordenadas;
-        this.tirosRecebidos = tirosRecebidos;
         this.nome = nome;
     }
 
@@ -58,6 +56,3 @@ public abstract class Bonecos {
     }
 
 }
-
-
-

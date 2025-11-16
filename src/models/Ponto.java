@@ -1,5 +1,7 @@
 package models;
 
+import java.util.Objects;
+
 public class Ponto {
     private int coordenadaX;
     private int coordenadaY;
@@ -24,8 +26,25 @@ public class Ponto {
             Ponto pontoVizinho = new Ponto(this.coordenadaX, this.coordenadaY - 1);
             return pontoVizinho;
         }
+    private final int coordenadax;
+    private final int coordenaday;
 
-        return null;
+    public Ponto(int coordenadax, int coordenaday) {
+        this.coordenadax = coordenadax;
+        this.coordenaday = coordenaday;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+        Ponto ponto = (Ponto) o;
+        return coordenadax == ponto.coordenadax && coordenaday == ponto.coordenaday;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(coordenadax, coordenaday);
+    }
 }
