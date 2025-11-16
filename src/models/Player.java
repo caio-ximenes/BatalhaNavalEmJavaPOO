@@ -20,6 +20,11 @@ public class Player {
         this.partida = partida;
     }
 
+    public void posicionarBonecos(Bonecos boneco) {
+        bonecos.forEach(boneco -> boneco.posicionarSe());
+    }
+
+
     public boolean atacar(int coordenadaX, int coordenadaY){
         Ponto tiro = new Ponto(coordenadaX,coordenadaY);
         Tabuleiro tabuleiroAdversario = this.partida.adversario.defesa;
