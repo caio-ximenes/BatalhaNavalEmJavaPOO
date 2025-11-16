@@ -20,5 +20,10 @@ public class Player {
         this.partida = partida;
     }
 
+    public void posicionarBonecos(Bonecos boneco) {
+        bonecos.forEach(boneco -> boneco.posicionarSe());
+    }
+
+
 
 }
