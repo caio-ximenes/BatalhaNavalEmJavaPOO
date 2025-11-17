@@ -1,6 +1,7 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Objects;
 
 public abstract class Bonecos {
@@ -20,19 +21,14 @@ public abstract class Bonecos {
         this.coordenadas = coordenadas;
         this.nome = nome;
         this.tipo = tipo;
+        this.tirosRecebidos = new ArrayList<>();
     }
 
-    public boolean receberTiro(Ponto ponto){
-        this.tirosRecebidos.add(ponto);
-        return this.abatido();
-    }
+    //O tabuleiro chamará esse metodo e cada tipo de boneco receberá o tiro de uma forma
+    public abstract boolean receberTiro(Ponto ponto, Map<Ponto, Bonecos> mapa);
 
-    public boolean abatido(){
-        if (this.tirosRecebidos.equals(this.coordenadas)){
-            return true;
-        }
-        return false;
-    }
+    //Verificar se o boneco está destruído
+    public abstract boolean abatido();
 
     public boolean posicionarSe(Ponto ponto, Direcoes direcao) {
         ArrayList<Ponto> pontos = new ArrayList<>();
@@ -53,8 +49,10 @@ public abstract class Bonecos {
             System.out.println("Posição inválida. Tente novamente.");
             return false;
         }
+
     }
 
     }
+
 
 
