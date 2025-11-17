@@ -19,6 +19,10 @@ public abstract class Bonecos {
         this.nome = nome;
     }
 
+/* <<<<<<<<<<<<<<  ✨ Windsurf Command ⭐ >>>>>>>>>>>>>>>> */
+    /**
+
+/* <<<<<<<<<<  aad7c7a2-fba7-46ec-bce5-f87c5c7a5149  >>>>>>>>>>> */
     public boolean receberTiro(Ponto ponto){
         this.tirosRecebidos.add(ponto);
         return this.abatido();
@@ -31,28 +35,19 @@ public abstract class Bonecos {
         return false;
     }
 
-    public void posicionarSe(Ponto ponto, Direcoes direcao){
+    public void posicionarSe(Ponto ponto, Direcoes direcao) {
         boolean posicaoValida = this.tabuleiro.validarPosicao();
+
         if (posicaoValida){
             coordenadas.add(ponto);
             for(int i = 0; i < this.tamanho; i++){
-                if (direcao.equals("direita")) {
-                    Ponto pontoVizinho = ponto.pegarVizinho(direcao);
-                    coordenadas.add(pontoVizinho);
-                }else if (direcao.equals("esquerda")) {
-                    Ponto pontoVizinho = ponto.pegarVizinho(direcao);
-                    coordenadas.add(pontoVizinho);
-                }else if (direcao.equals("cima")) {
-                    Ponto pontoVizinho = ponto.pegarVizinho(direcao);
-                    coordenadas.add(pontoVizinho);
-                }else if (direcao.equals("baixo")) {
-                    Ponto pontoVizinho = ponto.pegarVizinho(direcao);
-                    coordenadas.add(pontoVizinho);
-                }
-
+                // 2. Usa apenas o enum corretamente:
+                Ponto pontoVizinho = ponto.pegarVizinho(direcao);
+                coordenadas.add(pontoVizinho);
             }
         }
+    }
 
     }
 
-}
+

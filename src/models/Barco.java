@@ -2,7 +2,7 @@ package models;
 
 public class Barco extends Bonecos{
     public Barco(Player player) {
-        super(Player player,,"Barco") ;
+        super(Player player,"Barco") ;
 
     }
 

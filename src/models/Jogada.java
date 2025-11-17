@@ -4,13 +4,31 @@ import java.util.ArrayList;
 
 public class Jogada {
     Ponto ponto;
-    Player player;
-    ArrayList<Ponto> jogadas;
+    Player atacante;
+    Player inimigo;
 
-    public boolean atacar(int coordenadax, int coordenaday){
-        Ponto ponto = new Ponto(coordenadax,coordenaday);
-        player.receberAtaque(Ponto ponto);
-        jogadas.add(ponto);
+
+    public boolean atacar(int coordenadax, int coordenaday) {
+        Ponto tiro = new Ponto(coordenadax, coordenaday);
+        if(this.atacante.jaAtacou(tiro)){
+            return false;
+        }
+        else {
+            boolean ataque = inimigo.receberAtaque(tiro);
+            if(ataque){
+                System.out.println("Embarcações emm chamas! Você acertou!");
+                return true;
+            }
+            else {
+                System.out.println("Míssel atingiu águas comandante!");
+                return true;
+            }
+
+
+        }
+
+
 
     }
+
 }

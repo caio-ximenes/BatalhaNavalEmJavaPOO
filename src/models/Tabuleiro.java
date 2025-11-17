@@ -32,10 +32,12 @@ public class Tabuleiro {
         Bonecos bonecoAtingido = this.mapaDosBarcos.get(tiro);
 
         if (bonecoAtingido == null) {
+            this.erros.add(tiro);
             System.out.println("ÁGUA!");
             return false;
         }
         else {
+            this.acertos.add(tiro);
             System.out.println("FOGO!");
             boolean afundou = bonecoAtingido.receberTiro(tiro);
             this.mapaDosBarcos.remove(tiro); // Remove para não acertar de novo
