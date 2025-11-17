@@ -7,12 +7,14 @@ public class Jogada {
     Player atacante;
     Player inimigo;
 
-    public Jogada(int coordenadax, int coordenaday) {
+    public Jogada(int coordenadax, int coordenaday,Player atacante,Player inimigo) {
         this.ponto = new Ponto(coordenadax, coordenaday);
+        this.inimigo = inimigo;
+        this.atacante = atacante;
     }
 
-    public boolean atacar(int coordenadax, int coordenaday) {
-        Ponto tiro = new Ponto(coordenadax, coordenaday);
+    public boolean atacar() {
+        Ponto tiro = this.ponto;
         if(this.atacante.jaAtacou(tiro)){
             return false;
         }

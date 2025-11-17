@@ -61,10 +61,10 @@ import java.util.concurrent.TimeUnit;
             }
         }
     while(true){
-        Partida.lore("Comandante, qual linha devemos atacar?");
-        String linha = teclado.next();
-        Partida.lore("Comandante, qual coluna devemos atacar?");
-        String coluna = teclado.next();
+        Partida.lore("Comandante, qual linha devemos atacar? (Digite número de 1 a 5)");
+        int linha = teclado.nextInt();
+        Partida.lore("Comandante, qual coluna devemos atacar? (Digite número de 1 a 5)");
+        int coluna = teclado.nextInt();
         partidaAtual.atacar(linha,coluna);
         Thread.sleep(2000);
         partidaAtual.defender();

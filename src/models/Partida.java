@@ -34,6 +34,10 @@ public class Partida {
         this.player.posicionarBonecos();
         this.adversario.posicionarBonecos();
     }
+    public void atacar(int linha ,int coluna){
+        Jogada jogada = new Jogada(linha,coluna,this.player,this.adversario);
+        jogada.atacar();
+    }
 
 
     //    Recolhe entradas do usuário de localização dos bonecos
