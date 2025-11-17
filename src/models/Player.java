@@ -11,9 +11,9 @@ public abstract class Player {
     Partida partida;
     String nome;
 
-    public Player(Tabuleiro defesa, Tabuleiro ataque, ArrayList<Bonecos> bonecos, String nome, Partida partida) {
-        this.defesa = defesa;
-        this.ataque = ataque;
+    public Player(ArrayList<Bonecos> bonecos, String nome, Partida partida) {
+        this.defesa = new Tabuleiro();
+        this.ataque = new Tabuleiro();
         this.bonecos = bonecos;
         this.tirosRecebidos =  new ArrayList<Ponto>();
         this.nome = nome;

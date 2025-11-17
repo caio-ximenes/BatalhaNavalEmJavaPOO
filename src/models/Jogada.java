@@ -7,6 +7,9 @@ public class Jogada {
     Player atacante;
     Player inimigo;
 
+    public Jogada(int coordenadax, int coordenaday) {
+        this.ponto = new Ponto(coordenadax, coordenaday);
+    }
 
     public boolean atacar(int coordenadax, int coordenaday) {
         Ponto tiro = new Ponto(coordenadax, coordenaday);

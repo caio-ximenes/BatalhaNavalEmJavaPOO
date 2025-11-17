@@ -19,10 +19,6 @@ public abstract class Bonecos {
         this.nome = nome;
     }
 
-/* <<<<<<<<<<<<<<  ✨ Windsurf Command ⭐ >>>>>>>>>>>>>>>> */
-    /**
-
-/* <<<<<<<<<<  aad7c7a2-fba7-46ec-bce5-f87c5c7a5149  >>>>>>>>>>> */
     public boolean receberTiro(Ponto ponto){
         this.tirosRecebidos.add(ponto);
         return this.abatido();

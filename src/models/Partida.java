@@ -2,17 +2,26 @@ package models;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class Partida {
-    //    A classe Partida é responsavel pelo inicio e setup da partida
+    //    A classe Partida é responsavel pelo inicio e setup da partida e pela lógica de jogo
     Player player;
     Adversario adversario;
     ArrayList<Bonecos> bonecosPorPLayer;
 
-    public Partida(Player player, Adversario adversario) {
-        this.player = player;
-        this.adversario = adversario;
+    public Partida(String nome) {
+        this.player = new Usuario(bonecosPorPLayer, nome, this);
+        this.adversario = new Adversario(bonecosPorPLayer, this);
         this.bonecosPorPLayer = new ArrayList<Bonecos>();
+    }
+
+    public static void lore(String texto) throws InterruptedException {
+        for (int i = 0; i < texto.length(); i++) {
+            char letra = texto.charAt(i);
+            System.out.print("letra");
+            Thread.sleep(200);
+        }
     }
 
     public void iniciarPartida(String nome) {
