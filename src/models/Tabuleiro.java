@@ -10,12 +10,15 @@ public class Tabuleiro {
     private ArrayList<Ponto> jogadas;
     private ArrayList<Ponto> acertos;
     private ArrayList<Ponto> erros;
+    private int tamanho;
+
 
     public Tabuleiro() {
         this.mapaDosBarcos = new HashMap<>();
         this.jogadas = new ArrayList<>();
         this.acertos = new ArrayList<>();
         this.erros = new ArrayList<>();
+        this.tamanho = 6;
     }
     public void adicionarBarco(Bonecos boneco, ArrayList<Ponto> pontosDoBarco){
         for (int i = 0; i < pontosDoBarco.size(); i++) {
@@ -48,6 +51,16 @@ public class Tabuleiro {
             return true;
         }
 }
+
+        public boolean validarPosicao(ArrayList<Ponto> pontos) {
+            for (Ponto ponto : pontos) {
+                if (ponto.getX() > 0 && ponto.getX() < this.tamanho &&
+                    ponto.getY() > 0 && ponto.getY() < this.tamanho) {
+                    return true;
+                }
+            }
+            return false;
+        }
 
     public void registrarTiro(Ponto tiro, boolean acertou) {
         //No metodo atacar(coordenadaX, coordenadaY) em Player chamaremos esse metodo para deixar registrado o tiro

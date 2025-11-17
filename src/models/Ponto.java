@@ -11,11 +11,6 @@ public class Ponto {
         this.coordenadaX = coordenadaX;
         this.coordenadaY = coordenadaY;
     }
-    public Ponto(ArrayList<String> coordenadas) {
-        this.coordenadaX = Integer.parseInt(coordenadas.get(0));
-        this.coordenadaY = Integer.parseInt(coordenadas.get(1));
-    }
-
 
 
     public Ponto pegarVizinho(Direcoes direcao) {
@@ -44,9 +39,17 @@ public class Ponto {
         Ponto ponto = (Ponto) o;
         return coordenadaX == ponto.coordenadaX && coordenadaY == ponto.coordenadaY;
     }
+    public int getX() {
+        return coordenadaX;
+    }
+
+    public int getY() {
+        return coordenadaY;
+    }
 
     @Override
     public int hashCode() {
         return Objects.hash(coordenadaX, coordenadaY);
     }
+
 }

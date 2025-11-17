@@ -6,11 +6,17 @@ import java.util.concurrent.TimeUnit;
 
 public class Partida {
     //    A classe Partida é responsavel pelo inicio e setup da partida e pela lógica de jogo
-    Player player;
-    Adversario adversario;
-    ArrayList<Bonecos> bonecosPorPLayer;
-
+    private Usuario player;
+    private Adversario adversario;
+    private ArrayList<Bonecos> bonecosPorPLayer;
+    private static Scanner teclado = new Scanner(System.in);
     public Partida(String nome) {
+        Barco b1 = new Barco();
+        Submarino s1 = new Submarino();
+        Aviao a1 = new Aviao();
+        this.bonecosPorPLayer.add(b1);
+        this.bonecosPorPLayer.add(s1);
+        this.bonecosPorPLayer.add(a1);
         this.player = new Usuario(bonecosPorPLayer, nome, this);
         this.adversario = new Adversario(bonecosPorPLayer, this);
         this.bonecosPorPLayer = new ArrayList<Bonecos>();
@@ -24,43 +30,10 @@ public class Partida {
         }
     }
 
-    public void iniciarPartida(String nome) {
-        Barco b1 = new Barco();
-        Barco b2 = new Barco();
-        Submarino s2 = new Submarino();
-        Aviao a1 = new Aviao();
-        this.bonecosPorPLayer.add(b1);
-        this.bonecosPorPLayer.add(b2);
-        this.bonecosPorPLayer.add(s2);
-        this.bonecosPorPLayer.add(a1);
-
-        Tabuleiro defesaPlayer1 = new Tabuleiro();
-        Tabuleiro ataquePlayer1 = new Tabuleiro();
-        Player player1 = new Player(defesaPlayer1, ataquePlayer1, this.bonecosPorPLayer , nome, this);
-
-        for (int i = 0; i < this.bonecosPorPLayer.size(); i++) {
-            Bonecos boneco = this.bonecosPorPLayer.get(i);
-            ArrayList<String> instrucoes = this.posicionarBonecos(boneco);
-
-            ArrayList<Ponto> pontosReaisDoBarco = new ArrayList<>();
-
-            int coordenadax = Integer.parseInt(instrucoes.get(0));
-            int coordenaday = Integer.parseInt(instrucoes.get(1));
-            String direcao = instrucoes.get(2);
-            int tamanho = boneco.tamanho;
-            for (int j = 0; j < tamanho; j++) {
-                if (direcao.equals("Vertical")) {
-                    pontosReaisDoBarco.add(new Ponto(coordenadax + j, coordenaday));
-                } else { // "Horizontal"
-                    pontosReaisDoBarco.add(new Ponto(coordenadax, coordenaday + j));
-                }
-            }
-
-            defesaPlayer1.adicionarBarco(boneco,pontosReaisDoBarco);
-        }
-
+    public void iniciarPartida() {
+        this.player.posicionarBonecos();
+        this.adversario.posicionarBonecos();
     }
-
 
 
     //    Recolhe entradas do usuário de localização dos bonecos
@@ -90,6 +63,64 @@ public class Partida {
         }
 
         return null;
+    }
+
+    public static String reocolherEntradas(String mensagem){
+        System.out.println(mensagem);
+        return teclado.nextLine();
+    }
+    public static Direcoes recolherDirecao(String mensagem){
+        if (mensagem == null){
+            System.out.println("(1) Cima\n(2) Baixo\n(3) Direita\n(4) Esquerda");
+            int direcao = teclado.nextInt();
+            switch (direcao){
+                case 1:
+                    return Direcoes.CIMA;
+                case 2:
+                    return Direcoes.BAIXO;
+                case 3:
+                    return Direcoes.DIREITA;
+                case 4:
+                    return Direcoes.ESQUERDA;
+                default:
+                    return Direcoes.CIMA;
+            }
+        }
+        else {
+            System.out.println(mensagem);
+            System.out.println("(1) Cima\n(2) Baixo\n(3) Direita\n(4) Esquerda");
+            int direcao = teclado.nextInt();
+            switch (direcao) {
+                case 1:
+                    return Direcoes.CIMA;
+                case 2:
+                    return Direcoes.BAIXO;
+                case 3:
+                    return Direcoes.DIREITA;
+                case 4:
+                    return Direcoes.ESQUERDA;
+                default:
+                    return Direcoes.CIMA;
+            }
+        }
+
+    }
+    public static Ponto recolherPontos(String mensagem){
+        if (mensagem == null){
+            System.out.println("Digite a coluna");
+            int coordY = teclado.nextInt();
+            System.out.println("Digite a linha");
+            int coordX = teclado.nextInt();
+            return new Ponto(coordX, coordY);
+        }
+        else {
+            System.out.println(mensagem);
+            System.out.println("Digite a coluna");
+            int coordY = teclado.nextInt();
+            System.out.println("Digite a linha");
+            int coordX = teclado.nextInt();
+            return new Ponto(coordX, coordY);
+        }
     }
 
 }
