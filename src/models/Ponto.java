@@ -26,6 +26,8 @@ public class Ponto {
             Ponto pontoVizinho = new Ponto(this.coordenadaX, this.coordenadaY - 1);
             return pontoVizinho;
         }
+        return null;
+    }
 
 
 
@@ -35,11 +37,11 @@ public class Ponto {
 
         if (o == null || getClass() != o.getClass()) return false;
         Ponto ponto = (Ponto) o;
-        return coordenadax == ponto.coordenadax && coordenaday == ponto.coordenaday;
+        return coordenadaX == ponto.coordenadaX && coordenadaY == ponto.coordenadaY;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(coordenadax, coordenaday);
+        return Objects.hash(coordenadaX, coordenadaY);
     }
-}}
+}

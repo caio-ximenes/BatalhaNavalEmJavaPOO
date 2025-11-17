@@ -87,4 +87,14 @@ public class Tabuleiro {
     public boolean jaAtirouAqui(Ponto tiro) {
         return this.jogadas.contains(tiro);
     }
+
+    public boolean tropasAbatidas(){
+        if (this.mapaAereo.isEmpty() && this.mapaMaritimo.isEmpty()){
+            System.out.println("Todas as tropas foram abatidas!");
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
     }
