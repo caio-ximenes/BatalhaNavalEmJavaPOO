@@ -6,13 +6,13 @@ public class Submarino extends  Bonecos{
     private  boolean submerso;
 
     public Submarino() {
-        super(2, "Submarino");
+        super(Tipo.SUBMARINO);
         this.submerso = true;
 
     }
 
     @Override
-    public boolean receberTiro(Ponto ponto, Map<Ponto, Bonecos> mapa) {
+    public boolean receberTiro(Ponto ponto) {
         if (this.submerso){
         System.out.println("Submarino descoberto!");
         this.submerso = false;
@@ -22,8 +22,6 @@ public class Submarino extends  Bonecos{
         else{
             if(!this.tirosRecebidos.contains(ponto)){
                 this.tirosRecebidos.add(ponto);
-
-                mapa.remove(ponto);
             }
             //Retorna True se o Barco tiver sido abatido ou não
             return this.abatido();

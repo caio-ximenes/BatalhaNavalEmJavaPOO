@@ -52,7 +52,7 @@ import java.util.concurrent.TimeUnit;
         String resposta = teclado.next();
         while(true) {
             if (resposta.toLowerCase().equals("s")) {
-                partidaAtual.iniciarPartida(nome);
+                partidaAtual.iniciarPartida();
                 break;
             } else if (resposta.toLowerCase().equals("n")) {
                 System.exit(0);

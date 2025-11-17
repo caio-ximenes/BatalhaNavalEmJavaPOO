@@ -45,45 +45,37 @@ public class Tabuleiro {
         // 1. Verificamos o que tem nos mapas naquela coordenada
         // O tiro acerta primeiro quem está no ar, logo:
         Bonecos aviao = this.mapaAereo.get(tiro);
-        Bonecos embarcacao = this.mapaMaritimo.get(tiro);
+
 
         //Verifica se o avião foi acertado para depois verificar o Mar
-        if (aviao!=null){
-            System.out.println("FOGO! AVIÃO ABATIDO!!");
-            aviao.receberTiro(tiro,this.mapaAereo);
-            return true;
+        if (aviao != null) {
+
+            return aviao.receberTiro(tiro);
         }
-
         else {
+            Bonecos embarcacao = this.mapaMaritimo.get(tiro);
             if (embarcacao != null) {
-                System.out.println("FOGO!");
-                boolean afundou = embarcacao.receberTiro(tiro, this.mapaMaritimo);
 
-                if (afundou){
-                    System.out.println("Você destruiu o: " + embarcacao.nome + "!");
-                }
-                return true;
+                return embarcacao.receberTiro(tiro);
             }
             else {
-                System.out.println("ÁGUA!");
-
-
-
                 return false;
             }
         }
     }
-}
 
-        public boolean validarPosicao(ArrayList<Ponto> pontos) {
-            for (Ponto ponto : pontos) {
-                if (ponto.getX() > 0 && ponto.getX() < this.tamanho &&
-                    ponto.getY() > 0 && ponto.getY() < this.tamanho) {
-                    return true;
-                }
+
+    public boolean validarPosicao(ArrayList<Ponto> pontos) {
+        for (Ponto ponto : pontos) {
+            if (ponto.getX() < 0 || ponto.getX() >= this.tamanho ||
+                    ponto.getY() < 0 || ponto.getY() >= this.tamanho ||
+                    this.mapaMaritimo.containsKey(ponto) || // Já ocupado (mar)
+                    this.mapaAereo.containsKey(ponto)) {
+                return false;
             }
-            return false;
         }
+        return false;
+    }
 
     public void registrarTiro(Ponto tiro, boolean acertou) {
         //No metodo atacar(coordenadaX, coordenadaY) em Player chamaremos esse metodo para deixar registrado o tiro
@@ -112,4 +104,10 @@ public class Tabuleiro {
             return false;
         }
     }
+    public void removerDoMapa(Ponto tiro) {
+        // A 'Jogada' chama este metodo DEPOIS que 'verificarAtaque'
+        // retorna 'true' (acerto).
+        this.mapaAereo.remove(tiro);
+        this.mapaMaritimo.remove(tiro);
     }
+}

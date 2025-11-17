@@ -8,67 +8,53 @@ public class Partida {
     //    A classe Partida é responsavel pelo inicio e setup da partida e pela lógica de jogo
     private Usuario player;
     private Adversario adversario;
-    private ArrayList<Bonecos> bonecosPorPLayer;
+    private ArrayList<Bonecos> bonecosPorPLayer1;
+    private ArrayList<Bonecos> bonecosPorPLayer2;
     private static Scanner teclado = new Scanner(System.in);
+
     public Partida(String nome) {
-        Barco b1 = new Barco();
-        Submarino s1 = new Submarino();
-        Aviao a1 = new Aviao();
-        this.bonecosPorPLayer.add(b1);
-        this.bonecosPorPLayer.add(s1);
-        this.bonecosPorPLayer.add(a1);
-        this.player = new Usuario(bonecosPorPLayer, nome, this);
-        this.adversario = new Adversario(bonecosPorPLayer, this);
-        this.bonecosPorPLayer = new ArrayList<Bonecos>();
+        //Cria um ArrayList com os bonecos do Usuario
+
+        this.bonecosPorPLayer1 = new ArrayList<>();
+        this.bonecosPorPLayer1.add(new Barco());
+        this.bonecosPorPLayer1.add(new Submarino());
+        this.bonecosPorPLayer1.add(new Aviao());
+
+        //Atribui eles ao Usuario
+        this.player = new Usuario(bonecosPorPLayer1, nome, this);
+
+        // Faz o mesmo para o adversario
+        this.bonecosPorPLayer2 = new ArrayList<Bonecos>();
+        this.bonecosPorPLayer2.add(new Barco());
+        this.bonecosPorPLayer2.add(new Submarino());
+        this.bonecosPorPLayer2.add(new Aviao());
+
+        this.adversario = new Adversario(bonecosPorPLayer2, this);
     }
 
     public static void lore(String texto) throws InterruptedException {
         for (int i = 0; i < texto.length(); i++) {
             char letra = texto.charAt(i);
-            System.out.print("letra");
-            Thread.sleep(200);
+            System.out.print(letra);
+            Thread.sleep(50);
         }
     }
 
+    // Este é o método "Setup"
     public void iniciarPartida() {
-        this.player.posicionarBonecos();
-        this.adversario.posicionarBonecos();
+        System.out.println("--- Setup do " + player.nome + " ---");
+        this.posicionarFrota(player);
+
+        System.out.println("--- Setup do " + adversario.nome + " ---");
+        this.posicionarFrota(adversario);
+
+        // O Setup chama o Game Loop
+        this.comecarJogo();
     }
-    public void atacar(int linha ,int coluna){
-        Jogada jogada = new Jogada(linha,coluna,this.player,this.adversario);
-        jogada.atacar();
-    }
+
 
 
     //    Recolhe entradas do usuário de localização dos bonecos
-    public ArrayList<String> posicionarBonecos(Bonecos boneco) {
-        Scanner teclado = new Scanner(System.in);
-        System.out.println("Escolha a posicao do" + boneco.nome + ":");
-        System.out.println("Linha: ");
-        int linha = teclado.nextInt();
-        System.out.println("Coluna: ");
-        int coluna = teclado.nextInt();
-        System.out.println("Direção:\nVertical(1)\nHorizontal(2) ");
-        int direcao = teclado.nextInt();
-
-        if (direcao == 1) {
-            ArrayList<String> coordenadas = new ArrayList<String>();
-            coordenadas.add(Integer.toString(linha));
-            coordenadas.add(Integer.toString(coluna));
-            coordenadas.add("Vertical");
-
-            return coordenadas;
-        } else if (direcao == 2) {
-            ArrayList<String> coordenadas = new ArrayList<String>();
-            coordenadas.add(Integer.toString(linha));
-            coordenadas.add(Integer.toString(coluna));
-            coordenadas.add("Horizontal");
-            return coordenadas;
-        }
-
-        return null;
-    }
-
     public static String reocolherEntradas(String mensagem){
         System.out.println(mensagem);
         return teclado.nextLine();
@@ -111,20 +97,84 @@ public class Partida {
     }
     public static Ponto recolherPontos(String mensagem){
         if (mensagem == null){
-            System.out.println("Digite a coluna");
+            System.out.println("Digite a coluna (0-5)");
             int coordY = teclado.nextInt();
-            System.out.println("Digite a linha");
+            System.out.println("Digite a linha (0-5)");
             int coordX = teclado.nextInt();
             return new Ponto(coordX, coordY);
         }
         else {
             System.out.println(mensagem);
-            System.out.println("Digite a coluna");
+            System.out.println("Digite a coluna (0-5)");
             int coordY = teclado.nextInt();
-            System.out.println("Digite a linha");
+            System.out.println("Digite a linha (0-5)");
             int coordX = teclado.nextInt();
             return new Ponto(coordX, coordY);
         }
     }
 
+    private void posicionarFrota(Player player) {
+        System.out.println("\nPrepare sua frota, " + player.nome + "!");
+        for (Bonecos boneco : player.bonecos) {
+            boolean posicaoValida = false;
+            while (!posicaoValida) {
+                // Chama os métodos estáticos para pegar Ponto e Direcao
+                Ponto ponto = Partida.recolherPontos("Em qual ponto o " + boneco.nome + " (Tamanho " + boneco.tamanho + ") vai começar?");
+                Direcoes direcao = Partida.recolherDirecao(null);
+
+                ArrayList<Ponto> pontos = new ArrayList<>();
+                Ponto pontoAtual = ponto;
+                for (int i = 0; i < boneco.tamanho; i++) {
+                    if (pontoAtual == null) {
+                        break;
+                    }
+                    pontos.add(pontoAtual);
+                    pontoAtual = pontoAtual.pegarVizinho(direcao);
+                }
+
+                // Valida a posição no tabuleiro de DEFESA do player
+                if (player.defesa.validarPosicao(pontos)) {
+                    player.defesa.adicionarBarco(boneco, pontos);
+                    posicaoValida = true;
+                } else {
+                    System.out.println("Posição inválida (fora do mapa ou sobreposta). Tente novamente.");
+                }
+            }
+        }
+    }
+
+    // Este é o "Game Loop"
+    public void comecarJogo() {
+        Player atacante = this.player;
+        Player defensor = this.adversario;
+        teclado.nextLine(); // Consome o 'Enter' pendente do 'recolherDirecao'
+
+        while (true) {
+            System.out.println("-----------------------------------");
+            System.out.println("Turno de " + atacante.nome);
+            Ponto tiro = Partida.recolherPontos("Coordenadas do ataque:");
+
+            Jogada jogada = new Jogada(tiro.getX(), tiro.getY(), atacante, defensor);
+            jogada.atacar();
+
+            if (defensor.defesa.tropasAbatidas()) {
+                System.out.println("FIM DE JOGO! " + atacante.nome + " VENCEU!");
+                break;
+            }
+
+            Player temp = atacante;
+            atacante = defensor;
+            defensor = temp;
+
+            System.out.println("\nPressione Enter para passar o turno...");
+            teclado.nextLine();
+            // (Se o 'recolherPontos' deixar um 'Enter' pendente, você pode
+            // precisar de outro teclado.nextLine() aqui, mas comece com um)
+        }
+    }
+
+    // Método de ajuda para a 'Jogada'
+    public Player getInimigo(Player atacante) {
+        return (atacante == this.player) ? this.adversario : this.player;
+    }
 }
