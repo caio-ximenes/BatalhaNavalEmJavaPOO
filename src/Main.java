@@ -2,6 +2,7 @@
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 import models.Jogada;
 import models.Partida;
+import models.Tabuleiro;
 
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
@@ -44,10 +45,10 @@ import java.util.concurrent.TimeUnit;
         Partida.lore("Nossa nação está sendo atacada e só você pode nos ajudar...");
         for(int i = 0; i < 50; i++){
             System.out.print("=");
-            Thread.sleep(1000);
+            Thread.sleep(200);
         }
         Partida partidaAtual = new Partida(nome);
-        Partida.lore("Pronto?");
+        Partida.lore("\nPronto?(s/n)");
         System.out.print("-> ");
         String resposta = teclado.next();
         while(true) {
@@ -60,12 +61,13 @@ import java.util.concurrent.TimeUnit;
                 Partida.lore("Digite uma opção válida");
             }
         }
+
     while(true){
         Partida.lore("Comandante, qual linha devemos atacar? (Digite número de 1 a 5)");
         int linha = teclado.nextInt();
         Partida.lore("Comandante, qual coluna devemos atacar? (Digite número de 1 a 5)");
         int coluna = teclado.nextInt();
-        partidaAtual.atacar(linha,coluna);
+        partidaAtual.atacar(coluna,linha);
         Thread.sleep(2000);
         partidaAtual.defender();
         String ganhador = partidaAtual.vencedor();

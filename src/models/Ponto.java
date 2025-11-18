@@ -24,10 +24,10 @@ public class Ponto {
             return new Ponto(this.coordenadaX - 1, this.coordenadaY);
 
         } else if (direcao == Direcoes.CIMA) {
-            return new Ponto(this.coordenadaX, this.coordenadaY + 1);
+            return new Ponto(this.coordenadaX, this.coordenadaY - 1);
 
         } else if (direcao == Direcoes.BAIXO) {
-            return new Ponto(this.coordenadaX, this.coordenadaY - 1);
+            return new Ponto(this.coordenadaX, this.coordenadaY + 1);
         }
         return null;
     }

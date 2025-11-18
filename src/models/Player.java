@@ -22,18 +22,10 @@ public abstract class Player{
     }
 
 
-    public boolean jaAtacou(Ponto tiro) {
-        //Verifica se esse ponto já foi atacado
-        return this.ataque.jaAtirouAqui(tiro);
-
-    }
-
     public boolean receberAtaque(Ponto tiro){
             return this.defesa.verificarAtaque(tiro);
 
     }
-
-
 
 
 }

@@ -7,10 +7,8 @@ class MainSemScanner {
         Partida.lore("Iniciando simulação automática Humano vs. IA...");
         Thread.sleep(2000);
 
-        Partida partidaAtual = new Partida("Comandante (Humano)");
+        Partida partidaAtual = new Partida("Comandante (Humano)", true);
 
         partidaAtual.iniciarPartidaAutomatica();
-
-
     }
 }

@@ -17,11 +17,6 @@ public class Jogada {
     }
 
     public boolean atacar() {
-        if(this.atacante.jaAtacou(ponto)){
-            System.out.println("Você já atirou neste local!");
-            return false;
-        }
-
         boolean acertou = inimigo.receberAtaque(ponto);
         atacante.ataque.registrarTiro(ponto, acertou);
 
@@ -29,9 +24,11 @@ public class Jogada {
             System.out.println("Embarcações emm chamas! Você acertou!");
 
             this.defesaInimigo.removerDoMapa(ponto);
+
         }
         else {
                 System.out.println("Míssel atingiu águas, comandante!");
+
         }
 
         return acertou;
