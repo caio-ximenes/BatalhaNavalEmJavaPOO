@@ -1,8 +1,8 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
 
 //Agregação: Usuario e adversario existem por si só e não dependem da Partida
 //Cardinalidade de N:N com Player
@@ -182,11 +182,6 @@ public class Partida {
         }
     }
 
-    // Metodo de ajuda para a 'Jogada'
-    public Player getInimigo(Player atacante) {
-        return (atacante == this.player) ? this.adversario : this.player;
-    }
-
     public boolean acabou(){
         return this.player.defesa.tropasAbatidas() || this.adversario.defesa.tropasAbatidas();
     }
@@ -219,5 +214,54 @@ public class Partida {
         // Cria a "Jogada" (agora o adversário é o atacante)
         Jogada jogada = new Jogada(tiro.getX(), tiro.getY(), this.adversario, this.player);
         jogada.atacar();
+    }
+
+    //Métodos para o Main sem Scanner:
+
+
+    public void iniciarPartidaAutomatica() {
+        System.out.println("--- Setup Automático do " + player.nome + " ---");
+        this.posicionarFrotaAutomatica(player);
+
+        System.out.println("--- Setup Automático do " + adversario.nome + " ---");
+        this.posicionarFrotaAutomatica(adversario);
+
+        // Chama o Game Loop (que já sabe lidar com Bots)
+        this.comecarJogo();
+    }
+
+    private void posicionarFrotaAutomatica(Player player) {
+        System.out.println("\nPosicionando frota para " + player.nome + "...");
+        Random random = new Random(); // Gerador aleatório
+
+        for (Bonecos boneco : player.bonecos) {
+            boolean posicaoValida = false;
+            while (!posicaoValida) {
+                // 1. Gera Ponto e Direção aleatórios
+                int x = random.nextInt(6); // 0-5 (Tamanho do seu tabuleiro)
+                int y = random.nextInt(6); // 0-5
+                Ponto ponto = new Ponto(x, y);
+                Direcoes direcao = Direcoes.values()[random.nextInt(4)]; // CIMA, BAIXO, etc.
+
+                // 2. Calcula os pontos
+                ArrayList<Ponto> pontos = new ArrayList<>();
+                Ponto pontoAtual = ponto;
+                for (int i = 0; i < boneco.tamanho; i++) {
+                    if (pontoAtual == null) {
+                        break;
+                    }
+                    pontos.add(pontoAtual);
+                    pontoAtual = pontoAtual.pegarVizinho(direcao);
+                }
+
+                // 3. Valida a posição
+                if (player.defesa.validarPosicao(pontos)) {
+                    player.defesa.adicionarBarco(boneco, pontos);
+                    posicaoValida = true;
+                }
+                // Se for inválida, o 'while' tenta de novo
+            }
+        }
+        System.out.println("Frota de " + player.nome + " posicionada.");
     }
 }
