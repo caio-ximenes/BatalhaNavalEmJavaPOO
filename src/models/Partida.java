@@ -173,7 +173,7 @@ public class Partida {
         }
     }
 
-    // Método de ajuda para a 'Jogada'
+    // Metodo de ajuda para a 'Jogada'
     public Player getInimigo(Player atacante) {
         return (atacante == this.player) ? this.adversario : this.player;
     }

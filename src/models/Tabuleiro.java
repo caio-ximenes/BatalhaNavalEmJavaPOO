@@ -74,7 +74,7 @@ public class Tabuleiro {
                 return false;
             }
         }
-        return false;
+        return true;
     }
 
     public void registrarTiro(Ponto tiro, boolean acertou) {
