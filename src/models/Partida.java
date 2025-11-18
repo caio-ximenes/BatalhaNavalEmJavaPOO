@@ -54,6 +54,16 @@ public class Partida {
         // O Setup chama o Game Loop
         this.comecarJogo();
     }
+    public void iniciarPartidaAutomatica() {
+        System.out.println("--- Setup do " + player.nome + " ---");
+        this.posicionarFrotaAutomaticamente(player);
+
+        System.out.println("--- Setup do " + adversario.nome + " ---");
+        this.posicionarFrotaAutomaticamente(adversario);
+
+        // O Setup chama o Game Loop
+        this.comecarJogoAutomaticamente();
+    }
 
 
 
@@ -98,6 +108,42 @@ public class Partida {
         }
 
     }
+    public static Direcoes recolherDirecaoAutomaticamente(String mensagem){
+        if (mensagem == null){
+            System.out.println("(1) Cima\n(2) Baixo\n(3) Direita\n(4) Esquerda");
+            int direcao = Partida.gerarNumeroAleatorio1a4();
+            switch (direcao){
+                case 1:
+                    return Direcoes.CIMA;
+                case 2:
+                    return Direcoes.BAIXO;
+                case 3:
+                    return Direcoes.DIREITA;
+                case 4:
+                    return Direcoes.ESQUERDA;
+                default:
+                    return Direcoes.CIMA;
+            }
+        }
+        else {
+            System.out.println(mensagem);
+            System.out.println("(1) Cima\n(2) Baixo\n(3) Direita\n(4) Esquerda");
+            int direcao = Partida.gerarNumeroAleatorio1a4();
+            switch (direcao) {
+                case 1:
+                    return Direcoes.CIMA;
+                case 2:
+                    return Direcoes.BAIXO;
+                case 3:
+                    return Direcoes.DIREITA;
+                case 4:
+                    return Direcoes.ESQUERDA;
+                default:
+                    return Direcoes.CIMA;
+            }
+        }
+
+    }
     public static Ponto recolherPontos(String mensagem){
         if (mensagem == null){
             System.out.println("Digite a coluna (0-5)");
@@ -115,6 +161,23 @@ public class Partida {
             return new Ponto(coordX, coordY);
         }
     }
+    public static Ponto recolherPontosAutomaticamente(String mensagem){
+        if (mensagem == null){
+            System.out.println("Digite a coluna (0-5)");
+            int coordY = Partida.gerarNumeroAleatorio0a5();
+            System.out.println("Digite a linha (0-5)");
+            int coordX = Partida.gerarNumeroAleatorio0a5();
+            return new Ponto(coordX, coordY);
+        }
+        else {
+            System.out.println(mensagem);
+            System.out.println("Digite a coluna (0-5)");
+            int coordY = Partida.gerarNumeroAleatorio0a5();
+            System.out.println("Digite a linha (0-5)");
+            int coordX = Partida.gerarNumeroAleatorio0a5();
+            return new Ponto(coordX, coordY);
+        }
+    }
 
     private void posicionarFrota(Player player) {
         System.out.println("\nPrepare sua frota, " + player.nome + "!");
@@ -124,6 +187,35 @@ public class Partida {
                 // Chama os métodos estáticos para pegar Ponto e Direcao
                 Ponto ponto = Partida.recolherPontos("Em qual ponto o " + boneco.nome + " (Tamanho " + boneco.tamanho + ") vai começar?");
                 Direcoes direcao = Partida.recolherDirecao(null);
+
+                ArrayList<Ponto> pontos = new ArrayList<>();
+                Ponto pontoAtual = ponto;
+                for (int i = 0; i < boneco.tamanho; i++) {
+                    if (pontoAtual == null) {
+                        break;
+                    }
+                    pontos.add(pontoAtual);
+                    pontoAtual = pontoAtual.pegarVizinho(direcao);
+                }
+
+                // Valida a posição no tabuleiro de DEFESA do player
+                if (player.defesa.validarPosicao(pontos)) {
+                    player.defesa.adicionarBarco(boneco, pontos);
+                    posicaoValida = true;
+                } else {
+                    System.out.println("Posição inválida (fora do mapa ou sobreposta). Tente novamente.");
+                }
+            }
+        }
+    }
+    private void posicionarFrotaAutomaticamente(Player player) {
+        System.out.println("\nPrepare sua frota, " + player.nome + "!");
+        for (Bonecos boneco : player.bonecos) {
+            boolean posicaoValida = false;
+            while (!posicaoValida) {
+                // Chama os métodos estáticos para pegar Ponto e Direcao
+                Ponto ponto = Partida.recolherPontosAutomaticamente("Em qual ponto o " + boneco.nome + " (Tamanho " + boneco.tamanho + ") vai começar?");
+                Direcoes direcao = Partida.recolherDirecaoAutomaticamente(null);
 
                 ArrayList<Ponto> pontos = new ArrayList<>();
                 Ponto pontoAtual = ponto;
@@ -181,6 +273,40 @@ public class Partida {
             // precisar de outro teclado.nextLine() aqui, mas comece com um)
         }
     }
+    public void comecarJogoAutomaticamente() {
+        Player atacante = this.player;
+        Player defensor = this.adversario;
+
+
+        while (true) {
+            System.out.println("-----------------------------------");
+            System.out.println("Turno de " + atacante.nome);
+            Ponto tiro;
+            if (atacante instanceof Usuario) {
+                // Se for humano, pede o input
+                tiro = Partida.recolherPontosAutomaticamente("Coordenadas do ataque:");
+            } else {
+                // Se for o Adversario, gera o tiro
+                tiro = ((Adversario) atacante).ataqueAdversario();
+            }
+            Jogada jogada = new Jogada(tiro.getX(), tiro.getY(), atacante, defensor);
+            jogada.atacar();
+
+            if (defensor.defesa.tropasAbatidas()) {
+                System.out.println("FIM DE JOGO! " + atacante.nome + " VENCEU!");
+                break;
+            }
+
+            Player temp = atacante;
+            atacante = defensor;
+            defensor = temp;
+
+            System.out.println("\nPressione Enter para passar o turno...");
+            System.out.println("enter");;
+            // (Se o 'recolherPontos' deixar um 'Enter' pendente, você pode
+            // precisar de outro teclado.nextLine() aqui, mas comece com um)
+        }
+    }
 
     public boolean acabou(){
         return this.player.defesa.tropasAbatidas() || this.adversario.defesa.tropasAbatidas();
@@ -215,53 +341,56 @@ public class Partida {
         Jogada jogada = new Jogada(tiro.getX(), tiro.getY(), this.adversario, this.player);
         jogada.atacar();
     }
+    public void defenderAutomaticamente() {
+        System.out.println("-----------------------------------");
+        System.out.println("Turno de " + this.adversario.nome);
+
+        // Como é humano vs humano, pedimos o input de novo
+        Ponto tiro = Partida.recolherPontosAutomaticamente("Coordenadas do ataque:");
+
+        // Cria a "Jogada" (agora o adversário é o atacante)
+        Jogada jogada = new Jogada(tiro.getX(), tiro.getY(), this.adversario, this.player);
+        jogada.atacar();
+    }
+
 
     //Métodos para o Main sem Scanner:
 
 
-    public void iniciarPartidaAutomatica() {
-        System.out.println("--- Setup Automático do " + player.nome + " ---");
-        this.posicionarFrotaAutomatica(player);
+    public static int gerarNumeroAleatorio0a5() {
+        // 1. Define o intervalo: [0, 5]
+        final int MIN = 0;
+        final int MAX = 5;
 
-        System.out.println("--- Setup Automático do " + adversario.nome + " ---");
-        this.posicionarFrotaAutomatica(adversario);
+        // 2. Cria o gerador.
+        Random random = new Random();
 
-        // Chama o Game Loop (que já sabe lidar com Bots)
-        this.comecarJogo();
+        // 3. Calcula o range (tamanho do intervalo): 5 - 0 + 1 = 6
+        int range = MAX - MIN + 1;
+
+        // 4. Gera o número: random.nextInt(6) retorna [0, 5]
+        //    Não precisamos somar MIN (0) neste caso.
+        int numeroAleatorio = random.nextInt(range);
+
+        // 5. Retorna o número.
+        return numeroAleatorio;
     }
+    public static int gerarNumeroAleatorio1a4() {
+        // 1. Define o intervalo: [1, 4]
+        final int MIN = 1;
+        final int MAX = 4;
 
-    private void posicionarFrotaAutomatica(Player player) {
-        System.out.println("\nPosicionando frota para " + player.nome + "...");
-        Random random = new Random(); // Gerador aleatório
+        // 2. Cria o gerador.
+        Random random = new Random();
 
-        for (Bonecos boneco : player.bonecos) {
-            boolean posicaoValida = false;
-            while (!posicaoValida) {
-                // 1. Gera Ponto e Direção aleatórios
-                int x = random.nextInt(6); // 0-5 (Tamanho do seu tabuleiro)
-                int y = random.nextInt(6); // 0-5
-                Ponto ponto = new Ponto(x, y);
-                Direcoes direcao = Direcoes.values()[random.nextInt(4)]; // CIMA, BAIXO, etc.
+        // 3. Calcula o range (tamanho do intervalo): 4 - 1 + 1 = 4
+        int range = MAX - MIN + 1;
 
-                // 2. Calcula os pontos
-                ArrayList<Ponto> pontos = new ArrayList<>();
-                Ponto pontoAtual = ponto;
-                for (int i = 0; i < boneco.tamanho; i++) {
-                    if (pontoAtual == null) {
-                        break;
-                    }
-                    pontos.add(pontoAtual);
-                    pontoAtual = pontoAtual.pegarVizinho(direcao);
-                }
+        // 4. Gera o número: random.nextInt(4) -> [0, 3].
+        //    Somando MIN (1): [0, 3] + 1 -> [1, 4].
+        int numeroAleatorio = random.nextInt(range) + MIN;
 
-                // 3. Valida a posição
-                if (player.defesa.validarPosicao(pontos)) {
-                    player.defesa.adicionarBarco(boneco, pontos);
-                    posicaoValida = true;
-                }
-                // Se for inválida, o 'while' tenta de novo
-            }
-        }
-        System.out.println("Frota de " + player.nome + " posicionada.");
+        // 5. Retorna o número.
+        return numeroAleatorio;
     }
 }
