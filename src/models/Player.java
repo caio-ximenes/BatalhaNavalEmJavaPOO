@@ -3,13 +3,13 @@ package models;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public abstract class Player {
-    Tabuleiro defesa;
-    Tabuleiro ataque;
-    ArrayList<Bonecos> bonecos;
-    ArrayList<Ponto> tirosRecebidos;
-    Partida partida;
-    String nome;
+public abstract class Player{
+    protected Tabuleiro defesa;
+    protected Tabuleiro ataque;
+    protected ArrayList<Bonecos> bonecos;
+    protected ArrayList<Ponto> tirosRecebidos;
+    protected Partida partida;
+    protected String nome;
 
     public Player(ArrayList<Bonecos> bonecos, String nome, Partida partida) {
         this.defesa = new Tabuleiro();
@@ -18,6 +18,7 @@ public abstract class Player {
         this.nome = nome;
         this.partida = partida;
     }
+
 
     public boolean jaAtacou(Ponto tiro) {
         //Verifica se esse ponto já foi atacado

@@ -2,7 +2,7 @@ package models;
 
 import java.util.Map;
 
-public class Barco extends Bonecos{
+public class Barco extends Bonecos implements Veiculo {
     public Barco() {
         super(Tipo.BARCO) ;
 

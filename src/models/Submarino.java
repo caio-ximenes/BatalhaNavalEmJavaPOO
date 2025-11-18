@@ -2,7 +2,7 @@ package models;
 
 import java.util.Map;
 
-public class Submarino extends  Bonecos{
+public class Submarino extends Bonecos implements Veiculo{
     private  boolean submerso;
 
     public Submarino() {
