@@ -3,6 +3,8 @@ package models;
 import java.util.ArrayList;
 import java.util.Objects;
 
+
+//Cardinalidade 1:1 com Tabuleiro
 public class Ponto {
     private final int coordenadaX;
     private final int coordenadaY;

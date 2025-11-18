@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
+//Agregação: Usuario e adversario existem por si só e não dependem da Partida
+//Cardinalidade de N:N com Player
+
 public class Partida {
     //    A classe Partida é responsavel pelo inicio e setup da partida e pela lógica de jogo
     private Usuario player;

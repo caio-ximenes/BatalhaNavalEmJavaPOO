@@ -2,7 +2,9 @@ package models;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-
+//Cardinalidade de 1:N com Bonecos
+//Cardinalidade de 1:N com Pontos
+//Bidirecional com Partida
 public abstract class Player{
     protected Tabuleiro defesa;
     protected Tabuleiro ataque;
