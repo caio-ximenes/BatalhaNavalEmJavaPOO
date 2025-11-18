@@ -51,7 +51,7 @@ import java.util.concurrent.TimeUnit;
         System.out.print("-> ");
         String resposta = teclado.next();
         while(true) {
-            if (resposta.toLowerCase().equals("s")) {
+            if (resposta.equalsIgnoreCase("s")) {
                 partidaAtual.iniciarPartida();
                 break;
             } else if (resposta.toLowerCase().equals("n")) {
@@ -68,7 +68,7 @@ import java.util.concurrent.TimeUnit;
         partidaAtual.atacar(linha,coluna);
         Thread.sleep(2000);
         partidaAtual.defender();
-        String ganhador = partidaAtual.acabou();
+        String ganhador = partidaAtual.vencedor();
         if(ganhador == null){
             Thread.sleep(2000);
         }

@@ -40,7 +40,7 @@ public class Partida {
         }
     }
 
-    // Este é o método "Setup"
+    // Este é o metodo "Setup"
     public void iniciarPartida() {
         System.out.println("--- Setup do " + player.nome + " ---");
         this.posicionarFrota(player);
@@ -152,8 +152,14 @@ public class Partida {
         while (true) {
             System.out.println("-----------------------------------");
             System.out.println("Turno de " + atacante.nome);
-            Ponto tiro = Partida.recolherPontos("Coordenadas do ataque:");
-
+            Ponto tiro;
+            if (atacante instanceof Usuario) {
+                // Se for humano, pede o input
+                tiro = Partida.recolherPontos("Coordenadas do ataque:");
+            } else {
+                // Se for o Adversario, gera o tiro
+                tiro = ((Adversario) atacante).ataqueAdversario();
+            }
             Jogada jogada = new Jogada(tiro.getX(), tiro.getY(), atacante, defensor);
             jogada.atacar();
 
@@ -176,5 +182,39 @@ public class Partida {
     // Metodo de ajuda para a 'Jogada'
     public Player getInimigo(Player atacante) {
         return (atacante == this.player) ? this.adversario : this.player;
+    }
+
+    public boolean acabou(){
+        return this.player.defesa.tropasAbatidas() || this.adversario.defesa.tropasAbatidas();
+    }
+
+    public String vencedor(){
+        if (this.player.defesa.tropasAbatidas()){
+            return "Vencedor" + this.adversario.nome;
+        } else if (this.adversario.defesa.tropasAbatidas()){
+            return "Vencedor" + this.player.nome;
+        }
+        return null;
+    }
+
+    public void atacar(int linha, int coluna) {
+        // O Main já pegou a linha e coluna.
+        Ponto tiro = new Ponto(linha, coluna);
+
+        // Cria e executa a "Jogada"
+        Jogada jogada = new Jogada(tiro.getX(), tiro.getY(), this.player, this.adversario);
+        jogada.atacar();
+    }
+
+    public void defender() {
+        System.out.println("-----------------------------------");
+        System.out.println("Turno de " + this.adversario.nome);
+
+        // Como é humano vs humano, pedimos o input de novo
+        Ponto tiro = Partida.recolherPontos("Coordenadas do ataque:");
+
+        // Cria a "Jogada" (agora o adversário é o atacante)
+        Jogada jogada = new Jogada(tiro.getX(), tiro.getY(), this.adversario, this.player);
+        jogada.atacar();
     }
 }
