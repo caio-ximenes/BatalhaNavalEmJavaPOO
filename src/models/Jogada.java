@@ -1,7 +1,8 @@
 package models;
 
 import java.util.ArrayList;
-
+//Composição com Partida: Jogadas não fazem sentido sem uma partida, e só são feitas durante uma partida
+//Cardinalidade N:N com Player
 public class Jogada {
     Ponto ponto;
     Player atacante;

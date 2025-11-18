@@ -6,6 +6,7 @@ import java.util.Map;
 
 public class Tabuleiro {
 
+    //    Cardinalidade 1:N com Pontos
     private Map<Ponto, Bonecos> mapaMaritimo;
     private Map<Ponto, Bonecos> mapaAereo;
     private ArrayList<Ponto> jogadas;

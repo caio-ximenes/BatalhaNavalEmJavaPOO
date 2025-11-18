@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Arrays;
 
-public class Adversario extends Player {
+public class Adversario extends Player{
 
     private Random random;
 

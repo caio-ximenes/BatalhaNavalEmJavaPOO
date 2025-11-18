@@ -2,7 +2,7 @@ package models;
 
 import java.util.Map;
 
-public class Aviao extends Bonecos{
+public class Aviao extends Bonecos implements Veiculo {
     public Aviao() {
         super(Tipo.AVIAO);
     }
