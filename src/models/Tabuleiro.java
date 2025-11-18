@@ -51,13 +51,17 @@ public class Tabuleiro {
         //Verifica se o avião foi acertado para depois verificar o Mar
         if (aviao != null) {
 
-            return aviao.receberTiro(tiro);
+            aviao.receberTiro(tiro);
+
+            return true;
         }
         else {
             Bonecos embarcacao = this.mapaMaritimo.get(tiro);
             if (embarcacao != null) {
 
-                return embarcacao.receberTiro(tiro);
+                embarcacao.receberTiro(tiro);
+
+                return true;
             }
             else {
                 return false;
