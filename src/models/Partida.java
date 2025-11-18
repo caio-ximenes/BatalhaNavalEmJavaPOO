@@ -54,7 +54,7 @@ public class Partida {
         // O Setup chama o Game Loop
         this.comecarJogo();
     }
-    public void iniciarPartidaAutomatica() {
+    public String iniciarPartidaAutomatica() {
         System.out.println("--- Setup do " + player.nome + " ---");
         this.posicionarFrotaAutomaticamente(player);
 
@@ -62,7 +62,7 @@ public class Partida {
         this.posicionarFrotaAutomaticamente(adversario);
 
         // O Setup chama o Game Loop
-        this.comecarJogoAutomaticamente();
+        return this.comecarJogoAutomaticamente();
     }
 
 
@@ -273,7 +273,7 @@ public class Partida {
             // precisar de outro teclado.nextLine() aqui, mas comece com um)
         }
     }
-    public void comecarJogoAutomaticamente() {
+    public String comecarJogoAutomaticamente() {
         Player atacante = this.player;
         Player defensor = this.adversario;
 
@@ -294,7 +294,7 @@ public class Partida {
 
             if (defensor.defesa.tropasAbatidas()) {
                 System.out.println("FIM DE JOGO! " + atacante.nome + " VENCEU!");
-                break;
+                return atacante.nome;
             }
 
             Player temp = atacante;
@@ -314,9 +314,9 @@ public class Partida {
 
     public String vencedor(){
         if (this.player.defesa.tropasAbatidas()){
-            return "Vencedor" + this.adversario.nome;
+            return this.adversario.nome;
         } else if (this.adversario.defesa.tropasAbatidas()){
-            return "Vencedor" + this.player.nome;
+            return this.player.nome;
         }
         return null;
     }

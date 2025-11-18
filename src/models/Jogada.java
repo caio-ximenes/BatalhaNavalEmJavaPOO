@@ -24,10 +24,12 @@ public class Jogada {
             System.out.println("Embarcações emm chamas! Você acertou!");
 
             this.defesaInimigo.removerDoMapa(ponto);
+            this.defesaInimigo.desenhar();
 
         }
         else {
                 System.out.println("Míssel atingiu águas, comandante!");
+                this.defesaInimigo.desenhar();
 
         }
 

@@ -115,5 +115,35 @@ public class Tabuleiro {
         this.mapaAereo.remove(tiro);
         this.mapaMaritimo.remove(tiro);
     }
+    public void desenhar() {
+        // Imprime o cabeçalho das colunas (coordenada Y)
+        System.out.print("  "); // Espaço para a coordenada X
+        for (int y = 0; y < this.tamanho; y++) {
+            System.out.print(y + " ");
+        }
+        System.out.println(); // Nova linha
+
+        // Itera sobre as linhas (coordenada X)
+        for (int x = 0; x < this.tamanho; x++) {
+            // Imprime o cabeçalho da linha (coordenada X)
+            System.out.print(x + " ");
+
+            // Itera sobre as colunas (coordenada Y)
+            for (int y = 0; y < this.tamanho; y++) {
+                // Cria um objeto Ponto para a coordenada atual
+                // **ATENÇÃO:** O Ponto precisa ter implementado corretamente o equals() e hashCode()
+                // para ser usado como chave em um HashMap.
+                Ponto pontoAtual = new Ponto(x, y);
+
+                // Verifica se há um Boneco (avião ou embarcação) nesta coordenada
+                if (this.mapaAereo.containsKey(pontoAtual) || this.mapaMaritimo.containsKey(pontoAtual)) {
+                    System.out.print("X "); // Posição ocupada por uma peça
+                } else {
+                    System.out.print("O "); // Posição de água (vazia)
+                }
+            }
+            System.out.println(); // Nova linha após o fim de cada linha do tabuleiro
+        }
+    }
 
 }

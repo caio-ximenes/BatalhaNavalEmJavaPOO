@@ -49,47 +49,28 @@ class MainSemScanner {
         String resposta = "s";
         while(true) {
             if (resposta.equalsIgnoreCase("s")) {
-                partidaAtual.iniciarPartidaAutomatica();
-                break;
-            } else if (resposta.toLowerCase().equals("n")) {
-                System.exit(0);
-            } else {
-                Partida.lore("Digite uma opção válida");
-            }
-        }
-
-        while(true){
-            Partida.lore("Comandante, qual linha devemos atacar? (Digite número de 1 a 5)");
-            int linha = Partida.gerarNumeroAleatorio0a5();
-            Partida.lore("Comandante, qual coluna devemos atacar? (Digite número de 1 a 5)");
-            int coluna = Partida.gerarNumeroAleatorio0a5();
-            partidaAtual.atacar(coluna,linha);
-            Thread.sleep(2000);
-            partidaAtual.defenderAutomaticamente();
-            String ganhador = partidaAtual.vencedor();
-            if(ganhador == null){
-                Thread.sleep(2000);
-            }
-            else {
-                if (ganhador.equals("Comandante")) {
+                String resultado = partidaAtual.iniciarPartidaAutomatica();
+                if (resultado == null) {
+                    Thread.sleep(2000);
+                } else if (resultado.equals(nome)) {
                     Partida.lore("Comandante foi uma honra! Vencemos!");
                     Thread.sleep(2000);
-                    System.out.printf("Ao Comandante %s!",nome);
+                    System.out.printf("Ao Comandante %s!", nome);
                     Partida.lore("Vivaaa!");
                     System.exit(0);
-                }
-                else{
+                } else {
                     Partida.lore("Comandante nossas tropas foram afundadas!");
                     Thread.sleep(2000);
                     Partida.lore("Foi uma honra comandante!");
                     Partida.lore("*Míssel acerta o navio e explode você e o capitão Shelton");
                     System.exit(0);
                 }
-
+            } else if (resposta.toLowerCase().equals("n")) {
+                System.exit(0);
+            } else {
+                Partida.lore("Digite uma opção válida");
             }
-
-
+        }
         }
 
     }
-}
